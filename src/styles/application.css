@@ -1,0 +1,239 @@
+.tg-app {
+}
+
+.tg-auth {
+  margin: 0 auto;
+  width: 380px;
+}
+
+.tg-logo {
+  background-image: url(./images/tg_logo160x160.png);
+  width: 160px;
+  height: 160px;
+  margin: 108px auto 50px;
+  border-radius: 50%;
+}
+
+.tg-header {
+  font: 500 32px/34px Roboto, sans-serif;
+  text-align: center;
+}
+
+.tg-subheader {
+  font: 16px/22px Roboto, sans-serif;
+  text-align: center;
+  color: #707070;
+  margin-top: 16px;
+}
+
+.tg-country-select {
+  position: relative;
+  font-size: 16px;
+  line-height: 16px;
+  margin-top: 48px;
+}
+
+.tg-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tg-button:hover {
+  background-color: rgba(112, 117, 121, .08);
+}
+
+.tg-select-input {
+  border: 1px solid rgb(117, 117, 117);
+  outline: none;
+  width: 100%;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 16px 52px 16px 16px;
+  border-radius: 8px;
+}
+
+.tg-select-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(18px, 18px);
+  transform-origin: 0 50%;
+  transition: transform .2s linear;
+  color: rgba(0, 0, 0, 0.5);
+  background-color: white;
+  outline: solid 2px white;
+  pointer-events: none;
+}
+
+.tg-select-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid black;
+  overflow: hidden;
+  z-index: 1;
+  background-color: white;
+  /*TODO: CHECK SHADOWS*/
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,0.1), 0 8px 10px 1px rgba(0,0,0,0.4), 0 3px 14px 2px rgba(0,0,0,0.06);
+}
+
+.tg-select-content {
+  /*position: absolute;*/
+  top: 0;
+  right: 0;
+  /*bottom: 0;*/
+  left: 0;
+  max-height: 376px;
+  overflow-y: scroll;
+  cursor: pointer;
+}
+
+.tg-select-option {
+  height: 56px;
+  padding: 22px 18px 0px 16px;
+  position: relative;
+  font-weight: 500;
+}
+.tg-select-option:hover {
+  background-color: rgba(112, 117, 121, .08);
+}
+
+.tg-country-flag {
+  background-image: url(./images/flags.png);
+  float: left;
+  width: 45px;
+  height: 45px;
+  transform: scale(0.6) translateY(-6px);
+  transform-origin: 0 0;
+}
+.tg-country-code {
+  float:right;
+  color: rgb(117, 117, 117);
+  font-weight: 400;
+}
+
+.tg-country-select .IconDropdownArrow {
+  color: rgb(117, 117, 117);
+  transform-origin: 50% 50%;
+  transform: rotate(180deg);
+  transition: transform .2s linear;
+}
+
+.tg-select-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 52px;
+  height: 52px;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.tg-button.tg-select-button:hover {
+  background-color: transparent;
+}
+
+
+/*
+hover
+focus
+notempty
+*/
+
+.tg-country-select:hover > .tg-select-input {
+  border-color: black;
+}
+
+.tg-country-select.focused > .tg-select-input {
+  border-color: #4EA4F6;
+  border-width: 2px;
+  padding: 15px 51px 15px 15px;
+  caret-color: #4EA4F6;
+}
+
+.tg-country-select.notempty:hover > .tg-select-label {
+  color: black;
+}
+
+.tg-country-select.focused > .tg-select-label,
+.tg-country-select.notempty > .tg-select-label {
+  transform: translate(18px, -6px) scale(0.8);
+}
+
+.tg-country-select.focused > .tg-select-label,
+.tg-country-select.focused.notempty:hover > .tg-select-label {
+  color: #4EA4F6;
+}
+
+.tg-country-select:hover > .IconDropdownArrow {
+  color: black;
+}
+
+.tg-country-select.focused .IconDropdownArrow {
+  color: #4EA4F6;
+}
+
+.tg-country-select.expanded > .tg-select-dropdown {
+  display: block;
+}
+
+.tg-country-select.expanded .IconDropdownArrow {
+  transform: rotate(0deg);
+  /*transition: transform .2s linear;*/
+}
+
+.tg-phone-country-code {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.tg-button.tg-button-submit {
+  position: relative;
+  height: 52px;
+  border-radius: 8px;
+  background-color: #4EA4F6;
+  color: #ffffff;
+}
+
+.tg-button.tg-button-submit:hover:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+}
+
+.tg-auth > tgs-player {
+  width: 166px;
+  height: 166px;
+  margin: 0 auto;
+  margin-top: 118px;
+}
+
+.tg-auth-code-phone {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tg-button.tg-button-nofill {
+  font-size: 37px;
+  width: 1em;
+  height: 1em;
+  margin-left: 4px;
+  color: rgb(137, 141, 144);
+}
+
+.tg-button.tg-button-nofill:hover {
+  color: black;
+}

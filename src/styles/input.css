@@ -1,0 +1,55 @@
+.tg-input {
+  position: relative;
+  font-size: 16px;
+  line-height: 16px;
+  margin-top: 48px;
+}
+
+.tg-input-input {
+  border: 1px solid rgb(117, 117, 117);
+  outline: none;
+  width: 100%;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 16px 52px 16px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.tg-input-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(18px, 18px);
+  transform-origin: 0 50%;
+  transition: transform .2s linear;
+  color: rgba(0, 0, 0, 0.5);
+  background-color: white;
+  outline: solid 2px white;
+  pointer-events: none;
+}
+
+.tg-input:hover > .tg-input-input {
+  border-color: black;
+}
+
+.tg-input.focused > .tg-input-input {
+  border-color: #4EA4F6;
+  border-width: 2px;
+  padding: 15px 51px 15px 15px;
+  caret-color: #4EA4F6;
+}
+
+.tg-input.notempty:hover > .tg-input-label {
+  color: black;
+}
+
+.tg-input.focused > .tg-input-label,
+.tg-input.notempty > .tg-input-label {
+  transform: translate(18px, -6px) scale(0.8);
+}
+
+.tg-input.focused > .tg-input-label,
+.tg-input.focused.notempty:hover > .tg-input-label {
+  color: #4EA4F6;
+}

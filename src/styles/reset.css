@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font: 14px/18px Roboto,sans-serif,Arial,Helvetica;
+  overflow-y: scroll;
+}
+
+input {
+  font-family: Roboto,sans-serif,Arial,Helvetica;
+}

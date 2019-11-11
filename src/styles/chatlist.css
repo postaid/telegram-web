@@ -1,0 +1,57 @@
+.tg-chats-list {
+  width: 420px;
+  padding: 0 8px;
+}
+
+.tg-chat-list-item {
+  border-radius: 8px;
+  height: 72px;
+  padding-left: 72px;
+}
+
+.tg-chat-list-item:hover {
+  background-color: rgba(112, 117, 121, .08);
+}
+
+.tg-chat-list-item-photo {
+  width: 54px;
+  height: 54px;
+  margin-top: 9px;
+  margin-left: -63px;
+  float: left;
+  border-radius: 50%;
+  background-color: green;
+}
+
+.tg-chat-list-item-texts {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tg-chat-list-item-top {
+  height: 50%;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 4px;
+}
+
+.tg-chat-list-item-bottom {
+  height: 50%;
+  display: flex;
+  padding-top: 4px;
+}
+
+.tg-chat-list-item-title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.tg-chat-list-item-message {
+  font-size: 15px;
+  color: #707070;
+}
+
+.tg-chat-list-item-unread {
+  background-color: rgb(77, 205, 94);
+}

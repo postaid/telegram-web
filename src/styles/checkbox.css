@@ -1,0 +1,26 @@
+.tg-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tg-checkbox-input {
+  display: none;
+}
+
+.tg-checkbox-wrapper {
+  height: 24px;
+  width: 24px;
+  margin: 14px;
+  background-image: url('./images/checkboxempty_svg.svg');
+}
+
+.tg-checkbox-label {
+  margin-left: 22px;
+  font-weight: 500;
+}
+
+.tg-checkbox-input:checked + .tg-checkbox-wrapper {
+  background-image: url('./images/checkboxon_svg.svg');
+}
