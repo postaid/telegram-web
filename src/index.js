@@ -4,6 +4,7 @@ import 'ROOT/styles/reset.css';
 import 'ROOT/styles/input.css';
 import 'ROOT/styles/checkbox.css';
 import 'ROOT/styles/chatlist.css';
+import 'ROOT/styles/chatcontent.css';
 
 import 'ROOT/images/tg_logo160x160.png';
 import 'ROOT/images/flags.png';

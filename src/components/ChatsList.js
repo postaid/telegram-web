@@ -54,7 +54,6 @@ class ChatsList extends Component {
         case 'peerUser':
           const user = this.findById_(users, dialog.peer.user_id);
           if (user) {
-            console.log(user.status)
             const lastMessage = this.findById_(messages, dialog.top_message);
             elements.push(item = new ChatListUserItem(dialog, user, lastMessage));
           }

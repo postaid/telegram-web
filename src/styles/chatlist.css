@@ -1,3 +1,8 @@
+.tg-channels {
+  height: 100%;
+  background-color: #E6EBEE;
+}
+
 .tg-chats-list {
   position: fixed;
   width: 420px;
@@ -6,6 +11,8 @@
   border-right: 1px solid #DEE0E4;
   background-color: white;
   overflow: hidden;
+  top: 0;
+  left: 0;
 }
 
 .tg-chats-list-content {

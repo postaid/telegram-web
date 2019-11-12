@@ -1,4 +1,5 @@
 import Component from "ROOT/lib/Component";
+import { formatMessage } from "ROOT/lib/TelegramMessage";
 
 class ChatListItem extends Component {
   constructor (dialog, peer, lastMsg) {
@@ -56,10 +57,7 @@ class ChatListItem extends Component {
     let message = '', time = '';
     if (this.lastMsg_) {
       const msg = this.lastMsg_;
-      message = (msg.message || '').slice(0, 80) + '';
-      if (msg.entities) {
-        message = this.applyMessageEntities_(message, msg.entities);
-      }
+      message = formatMessage(msg, 80);
       time = this.getTime(msg.date);
     }
     return [message, time];
@@ -71,20 +69,6 @@ class ChatListItem extends Component {
 
   isOnline () {
     return false;
-  }
-
-  applyMessageEntities_(message, entities) {
-    for (let i = entities.length - 1; i >= 0; i--) {
-      const e = entities[i];
-      switch(e._) {
-        case 'messageEntityBold':
-          message = message.slice(0, e.offset) + '<b>'
-            + message.slice(e.offset, e.offset + e.length) + '</b>'
-            + message.slice(e.offset + e.length);
-          break;
-      }
-    }
-    return message;
   }
 
   getTime (date) {

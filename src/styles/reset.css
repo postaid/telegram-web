@@ -5,10 +5,14 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   font: 14px/18px Roboto,sans-serif,Arial,Helvetica;
   overflow-y: scroll;
-  background-color: #E6EBEE;
+  height: 100%
 }
 
 input {
