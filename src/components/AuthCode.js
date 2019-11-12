@@ -49,7 +49,6 @@ class AuthCode extends Component {
     });
     inpCode.on('input', (value) => {
       if (value.length === 5 ) {
-        debugger;
         MTProtoClient('auth.signIn', {
           phone_number   : Store.getStateValue('phone').replace(/[^0-9+]/g, ''),
           phone_code_hash: Store.getStateValue('phone_code_hash'),

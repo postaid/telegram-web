@@ -9,6 +9,7 @@ const Store = {
     keepSignIn: true,
     phone_code_hash: '',
     phone_hash_pending: false,
+    activeChat: null,
   },
   getStateValue (name) {
     return this.state[name];

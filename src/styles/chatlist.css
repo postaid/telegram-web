@@ -1,12 +1,28 @@
 .tg-chats-list {
+  position: fixed;
   width: 420px;
+  height: 100%;
   padding: 0 8px;
+  border-right: 1px solid #DEE0E4;
+  background-color: white;
+  overflow: hidden;
+}
+
+.tg-chats-list-content {
+  height: 100%;
+  width: 450px;
+  overflow-y:scroll;
+  padding: 12px 0;
 }
 
 .tg-chat-list-item {
   border-radius: 8px;
   height: 72px;
   padding-left: 72px;
+  padding-right: 10px;
+  cursor: pointer;
+  max-width: 402px;
+  position: relative;
 }
 
 .tg-chat-list-item:hover {
@@ -23,6 +39,17 @@
   background-color: green;
 }
 
+.tg-chat-list-item-online {
+  border-radius: 50%;
+  border: 2px solid white;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  top: 48px;
+  left: 48px;
+  background-color: #0AC630;
+}
+
 .tg-chat-list-item-texts {
   display: flex;
   flex-direction: column;
@@ -33,25 +60,43 @@
   height: 50%;
   display: flex;
   align-items: flex-end;
-  padding-bottom: 4px;
+  padding-bottom: 2px;
+  padding-right: 4px;
 }
 
 .tg-chat-list-item-bottom {
-  height: 50%;
   display: flex;
-  padding-top: 4px;
+  padding-top: 2px;
+  align-items: center;
 }
 
 .tg-chat-list-item-title {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 15px;
+  flex: 1;
 }
 
 .tg-chat-list-item-message {
   font-size: 15px;
   color: #707070;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 4px;
 }
 
 .tg-chat-list-item-unread {
   background-color: rgb(77, 205, 94);
+  border-radius: 12px;
+  height: 24px;
+  line-height: 24px;
+  vertical-align: middle;
+  padding: 1px 8px 0;
+  color: white;
+}
+
+.tg-chat-list-item-time {
+  font-size: 12px;
+  color: #707070;
 }

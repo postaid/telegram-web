@@ -8,6 +8,7 @@
 body {
   font: 14px/18px Roboto,sans-serif,Arial,Helvetica;
   overflow-y: scroll;
+  background-color: #E6EBEE;
 }
 
 input {

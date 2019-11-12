@@ -42,13 +42,16 @@ class Component extends EventEmitter {
       if (children) {
         for (let i = 0; i < children.length; i++) {
           let child = children[i];
-          if (typeof child === 'string') {
+          const type = typeof child;
+          if (type === 'string') {
             tempDiv.innerHTML = child;
             while(tempDiv.firstChild) {
               el.appendChild(tempDiv.firstChild);
             }
           } else if (child.__component) {
             el.appendChild(child.el);
+          } else if (type === 'number') {
+            el.appendChild(document.createTextNode(child));
           } else {
             el.appendChild(child);
           }
@@ -56,6 +59,12 @@ class Component extends EventEmitter {
       }
     }
     return el;
+  }
+
+  static createVoid () {
+    let v = document.createComment('------');
+    v.__void = true;
+    return v;
   }
 }
 

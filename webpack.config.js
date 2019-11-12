@@ -24,7 +24,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 9000,
-    host: '192.168.1.2',
+    // host: '192.168.1.2',
     headers: {
       "Access-Control-Allow-Methods": "POST, OPTIONS",
       "Access-Control-Allow-Headers": "origin, content-type",

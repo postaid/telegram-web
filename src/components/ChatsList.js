@@ -2,6 +2,8 @@ import Component from 'ROOT/lib/Component'
 import MTProtoClient from 'ROOT/lib/mtproto'
 import Store from 'ROOT/store'
 import ChatListUserItem from 'ROOT/components/ChatListUserItem'
+import ChatListChannelItem from "ROOT/components/ChatListChannelItem";
+import ChatContent from "ROOT/components/ChatContent";
 
 class ChatsList extends Component {
   constructor () {
@@ -11,12 +13,15 @@ class ChatsList extends Component {
 
   render (createEl) {
     this.el = createEl('div', 'tg-channels', [
-      this.chatsList = createEl('div', 'tg-chats-list')
+      this.chatContent = new ChatContent(),
+      this.chatsList = createEl('div', 'tg-chats-list', [
+        this.chatsListContent = createEl('div', 'tg-chats-list-content')
+      ])
     ]);
 
     Store.registerUpdate('chats', (chats) => {
       this.updateChatsList_(chats, createEl);
-    })
+    });
     MTProtoClient('messages.getDialogs', {
       flags: 0,
       exclude_pinned: false,
@@ -29,14 +34,14 @@ class ChatsList extends Component {
       limit: 0,
       hash: 0,
     })
-      .then(({chats, dialogs, messages, users}) => {
+      .then(({ chats, dialogs, messages, users }) => {
         this.createChatsList_(dialogs, chats, users, messages);
       })
       .catch((err) => {
         if (err.code === 401) {
           Store.setStateValue('authorized', false);
         }
-      })
+      });
     return this.el;
   }
 
@@ -44,23 +49,33 @@ class ChatsList extends Component {
     const elements = [];
     for (let i = 0; i < dialogs.length; i++) {
       const dialog = dialogs[i];
+      let item = null;
       switch (dialog.peer._) {
         case 'peerUser':
           const user = this.findById_(users, dialog.peer.user_id);
           if (user) {
+            console.log(user.status)
             const lastMessage = this.findById_(messages, dialog.top_message);
-            elements.push(new ChatListUserItem(dialog, user, lastMessage));
+            elements.push(item = new ChatListUserItem(dialog, user, lastMessage));
           }
           break;
         case 'peerChannel':
+          const channel = this.findById_(chats, dialog.peer.channel_id);
+          if (channel) {
+            const lastMessage = this.findById_(messages, dialog.top_message);
+            elements.push(item = new ChatListChannelItem(dialog, channel, lastMessage));
+          }
           break;
       }
+      if (item) {
+        item.on('click', (item) => this.chatListItemClick(item));
+      }
     }
-    this.chatsList.innerHTML = '';
-    elements.forEach(e => this.chatsList.appendChild(e.el));
+    this.chatsListContent.innerHTML = '';
+    elements.forEach(e => this.chatsListContent.appendChild(e.el));
   }
 
-  findById_(users, id) {
+  findById_ (users, id) {
     return users.find(u => u.id === id);
   }
 
@@ -72,10 +87,14 @@ class ChatsList extends Component {
       }, [
         chat.title
       ])
-    })
-    this.chatsList.innerHTML = '';
-    chats.forEach(c => this.chatsList.appendChild(c));
+    });
+    this.chatsListContent.innerHTML = '';
+    chats.forEach(c => this.chatsListContent.appendChild(c));
     console.log(list);
+  }
+
+  chatListItemClick (item) {
+    Store.setStateValue('activeChat', item);
   }
 }
 
