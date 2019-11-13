@@ -20,6 +20,27 @@ class ChatListUserItem extends ChatListItem {
   isOnline () {
     return this.peer_.status && this.peer_.status._ === 'userStatusOnline';
   }
+
+  getItemPhotoData () {
+    const photoData = this.peer_.photo;
+    if (!photoData) {
+      return [null, null];
+    }
+
+    switch (photoData._) {
+      case 'userProfilePhoto':
+        return [
+          {
+            _: 'inputPeerUser',
+            user_id: this.peer_.id,
+            access_hash: this.peer_.access_hash + 0
+          },
+          photoData.photo_small
+        ];
+      default:
+        return [null, null];
+    }
+  }
 }
 
 export default ChatListUserItem;

@@ -40,6 +40,8 @@ class ChatsList extends Component {
       .catch((err) => {
         if (err.code === 401) {
           Store.setStateValue('authorized', false);
+        } else {
+          console.log(err);
         }
       });
     return this.el;
@@ -64,6 +66,10 @@ class ChatsList extends Component {
             const lastMessage = this.findById_(messages, dialog.top_message);
             elements.push(item = new ChatListChannelItem(dialog, channel, lastMessage));
           }
+          break;
+        case 'peerChat':
+          // todo: ADD CHAT PEER
+          console.log('TO BE DONE');
           break;
       }
       if (item) {

@@ -5,6 +5,7 @@ import AuthCode from 'ROOT/components/AuthCode';
 import ChatsList from 'ROOT/components/ChatsList'
 import Store from "ROOT/store";
 import Storage from 'ROOT/lib/Storage';
+import MTProtoClient from "ROOT/lib/mtproto";
 
 class Application extends Component {
   constructor () {
@@ -50,6 +51,9 @@ class Application extends Component {
         this.showView('chats');
       }
     }
+    MTProtoClient('help.getNearestDC', {})
+      .then(() => {})
+      .catch(() => {});
 
     console.timeEnd('APP RENDER');
     return el;

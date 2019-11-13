@@ -1,5 +1,5 @@
 import Component from "ROOT/lib/Component";
-import { formatMessage } from "ROOT/lib/TelegramMessage";
+import { formatMessage, getPhoto } from "ROOT/lib/TelegramMessage";
 
 class ChatListItem extends Component {
   constructor (dialog, peer, lastMsg) {
@@ -16,6 +16,8 @@ class ChatListItem extends Component {
     let title = this.getTitle();
 
     this.createItem(createEl, title, message, time, unreadCount);
+
+    this.getItemPhoto();
 
     this.el.addEventListener('click', () => {
       this.emit('click', this);
@@ -43,6 +45,23 @@ class ChatListItem extends Component {
       ])
     ]);
     return this.el;
+  }
+
+  getItemPhotoData () {
+    return [null, null];
+  }
+
+  getItemPhoto () {
+    let [photoPeer, location] = this.getItemPhotoData();
+    if (location && photoPeer) {
+      getPhoto(photoPeer, location)
+        .then((objectUrl) => {
+          this.photo_.style.backgroundImage = `url(${objectUrl})`;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   getUnreadCount () {

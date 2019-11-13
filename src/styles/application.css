@@ -1,17 +1,20 @@
 .tg-app {
   height: 100%;
+  overflow-y: scroll;
 }
 
 .tg-auth {
   margin: 0 auto;
   width: 380px;
+  min-height: 100%;
+  padding-top: 108px;
 }
 
 .tg-logo {
   background-image: url(./images/tg_logo160x160.png);
   width: 160px;
   height: 160px;
-  margin: 108px auto 50px;
+  margin: 0 auto 50px;
   border-radius: 50%;
 }
 
@@ -96,7 +99,7 @@
 
 .tg-select-option {
   height: 56px;
-  padding: 22px 18px 0px 16px;
+  padding: 22px 18px 0 16px;
   position: relative;
   font-weight: 500;
 }

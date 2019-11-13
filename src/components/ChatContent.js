@@ -12,7 +12,8 @@ class ChatContent extends Component {
     this.el = createEl('div', 'tg-chat-content', [
       createEl('div', 'tg-chat-content-header', [
         this.photo = createEl('div', 'tg-chat-list-item-photo empty')
-      ])
+      ]),
+      this.content = createEl('div', 'tg-chat-content-content')
     ]);
 
     Store.registerUpdate('activeChat', (chat) => this.activeChatUpdate(chat));
@@ -37,7 +38,10 @@ class ChatContent extends Component {
         id: messages
       })
         .then((p) => {
-          debugger;
+          this.content.innerHTML = '';
+          p.messages.forEach((m) => {
+            this.content.appendChild(Component.createElement('div', 'tg-chat-message', [m.message || 'NO MESSAGE']));
+          });
         })
         .catch((err) => {
           console.log(err);
