@@ -12,12 +12,13 @@ class ChatListChannelItem extends ChatListItem {
   getItemPhotoData () {
     const photoData = this.peer_.photo;
     if (!photoData) {
-      return [null, null];
+      return null;
     }
 
     switch (photoData._) {
       case 'chatPhoto':
         return [
+          photoData.photo_id,
           {
             _: 'inputPeerChannel',
             channel_id: this.peer_.id,
@@ -26,7 +27,7 @@ class ChatListChannelItem extends ChatListItem {
           photoData.photo_small
         ];
     }
-    return [null, null];
+    return null;
 /*
 
     switch (photoData._) {

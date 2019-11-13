@@ -22,7 +22,32 @@ function formatMessage (message, limit = -1) {
   return text;
 }
 
-function getPhoto (peer, loc) {
+const photos = {};
+const photosPending = {};
+
+function getPhoto ([id, peer, loc, dc_id]) {
+  return new Promise((resolve, reject) => {
+    if (photos[id]) {
+      resolve(photos[id]);
+    } else if (photosPending[id]) {
+      photosPending[id].then(data => {
+        resolve(data);
+        return data;
+      });
+    } else {
+      photosPending[id] = _getPhoto(peer, loc, dc_id)
+        .then((data) => {
+          photos[id] = data;
+          photosPending[id] = null;
+          resolve(data);
+          return data;
+        })
+        .catch(err => reject(err));
+    }
+  });
+}
+
+function _getPhoto (peer, loc, dcID) {
   return new Promise((resolve, reject) => {
     const params = {
       flags: 0,
@@ -38,39 +63,54 @@ function getPhoto (peer, loc) {
       offset: 0,
       limit: 1024 * 1024,
     };
-
+    const options = {};
+    if (dcID) {
+      options.dcID = dcID;
+    }
     let bytes = [];
 
     const fnGetParts = () => {
-      _getFilePart(params)
+      _getFilePart(params, options)
         .then((data) => {
-          if (data.type._ === 'storage.filePartial') {
-            params.offset += params.limit;
-            if (data.bytes.length) {
-              bytes.push(data.bytes);
-              fnGetParts();
-            } else {
-              bytes = Array.prototype.concat.apply([], bytes);
-              const blob = new Blob(bytes, {type: 'image/png'});
-              resolve(URL.createObjectURL(blob));
-            }
-          } else {
-            debugger;
+          switch (data.type._) {
+            case 'storage.fileUnknown':
+              resolve(URL.createObjectURL(new Blob(bytes)));
+              break;
+            case 'storage.filePartial':
+              params.offset += params.limit;
+              const bytesCount = data.bytes.length;
+              if (bytesCount) {
+                bytes.push(data.bytes);
+                if (bytesCount < params.limit) {
+                  bytes = Array.prototype.concat.apply([], bytes);
+                  const blob = new Blob(bytes);
+                  resolve(URL.createObjectURL(blob));
+                } else {
+                  fnGetParts();
+                }
+              } else {
+                fnGetParts();
+              }
+              break;
+            default:
+              const type = data.type._.replace('storage.file', '');
+              const blob = new Blob(data.bytes, { type: 'image/' + type.toLowerCase() });
+              const url = URL.createObjectURL(blob)
+              resolve(url);
+              break;
           }
         })
-        .catch((err) => {
-          reject(err);
-        });
+        .catch(err => reject(err));
     };
     fnGetParts();
-  })
+  });
 }
 
-function _getFilePart (params) {
+function _getFilePart (params, options) {
   return new Promise((resolve, reject) => {
-    MTProtoClient('upload.getFile', params)
-      .then((data) => resolve(data))
-      .catch((err) => reject(err));
+    MTProtoClient('upload.getFile', params, options)
+      .then(data => resolve(data))
+      .catch(err => reject(err));
   })
 }
 

@@ -6,6 +6,7 @@ import ChatsList from 'ROOT/components/ChatsList'
 import Store from "ROOT/store";
 import Storage from 'ROOT/lib/Storage';
 import MTProtoClient from "ROOT/lib/mtproto";
+import ErrorHandler from 'ROOT/lib/ErrorHandler'
 
 class Application extends Component {
   constructor () {
@@ -51,9 +52,9 @@ class Application extends Component {
         this.showView('chats');
       }
     }
-    MTProtoClient('help.getNearestDC', {})
+    MTProtoClient('help.getNearestDc', {})
       .then(() => {})
-      .catch(() => {});
+      .catch(err => ErrorHandler(err));
 
     console.timeEnd('APP RENDER');
     return el;

@@ -1,5 +1,6 @@
 import Component from "ROOT/lib/Component";
 import { formatMessage, getPhoto } from "ROOT/lib/TelegramMessage";
+import ErrorHandler from 'ROOT/lib/ErrorHandler'
 
 class ChatListItem extends Component {
   constructor (dialog, peer, lastMsg) {
@@ -52,15 +53,13 @@ class ChatListItem extends Component {
   }
 
   getItemPhoto () {
-    let [photoPeer, location] = this.getItemPhotoData();
-    if (location && photoPeer) {
-      getPhoto(photoPeer, location)
+    let photoData = this.getItemPhotoData();
+    if (photoData) {
+      getPhoto(photoData)
         .then((objectUrl) => {
           this.photo_.style.backgroundImage = `url(${objectUrl})`;
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(err => ErrorHandler(err));
     }
   }
 

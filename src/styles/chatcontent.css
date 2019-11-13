@@ -28,3 +28,18 @@
 .tg-chat-message {
     margin-top: 10px;
 }
+
+.tg-chat-content-content {
+    max-width: 698px;
+    margin: 0 auto;
+}
+
+.tg-chat-message-channel {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 4px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 3px;
+}
+
+

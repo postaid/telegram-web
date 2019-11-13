@@ -18,3 +18,7 @@ body {
 input {
   font-family: Roboto,sans-serif,Arial,Helvetica;
 }
+
+b {
+  font-weight: 500;
+}

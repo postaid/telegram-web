@@ -5,7 +5,7 @@
 
 .tg-auth {
   margin: 0 auto;
-  width: 380px;
+  max-width: 380px;
   min-height: 100%;
   padding-top: 108px;
 }
@@ -220,7 +220,6 @@ notempty
   width: 166px;
   height: 166px;
   margin: 0 auto;
-  margin-top: 118px;
 }
 
 .tg-auth-code-phone {

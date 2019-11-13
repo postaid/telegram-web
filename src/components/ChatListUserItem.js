@@ -24,21 +24,23 @@ class ChatListUserItem extends ChatListItem {
   getItemPhotoData () {
     const photoData = this.peer_.photo;
     if (!photoData) {
-      return [null, null];
+      return null;
     }
 
     switch (photoData._) {
       case 'userProfilePhoto':
         return [
+          photoData.photo_id,
           {
             _: 'inputPeerUser',
             user_id: this.peer_.id,
             access_hash: this.peer_.access_hash + 0
           },
-          photoData.photo_small
+          photoData.photo_small,
+          photoData.dc_id
         ];
       default:
-        return [null, null];
+        return null;
     }
   }
 }

@@ -4,6 +4,7 @@ import Store from 'ROOT/store'
 import ChatListUserItem from 'ROOT/components/ChatListUserItem'
 import ChatListChannelItem from "ROOT/components/ChatListChannelItem";
 import ChatContent from "ROOT/components/ChatContent";
+import ErrorHandler from 'ROOT/lib/ErrorHandler'
 
 class ChatsList extends Component {
   constructor () {
@@ -37,13 +38,7 @@ class ChatsList extends Component {
       .then(({ chats, dialogs, messages, users }) => {
         this.createChatsList_(dialogs, chats, users, messages);
       })
-      .catch((err) => {
-        if (err.code === 401) {
-          Store.setStateValue('authorized', false);
-        } else {
-          console.log(err);
-        }
-      });
+      .catch(err => ErrorHandler(err));
     return this.el;
   }
 

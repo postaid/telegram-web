@@ -47,23 +47,6 @@ const MTProtoClient = MTProto({ server, api,
 });
 export default MTProtoClient;
 
-async function connect(){
-  const { phone_code_hash } = await client('auth.sendCode', {
-    phone_number  : phone.num,
-    current_number: false,
-    api_id        : Config.app.id,
-    api_hash      : Config.app.hash
-  }).catch(() => {})
-  const user = await client('auth.signIn', {
-    phone_number   : phone.num,
-    phone_code_hash: phone_code_hash,
-    phone_code     : phone.code
-  })
-    .catch(() => {})
-
-  console.log('signed as ', user)
-}
-
 /**
 
  mtproto config

@@ -6,6 +6,7 @@ import IconEdit from 'ROOT/components/icons/IconEdit'
 import Input from 'ROOT/components/controls/Input'
 import StickerWrapper from 'ROOT/lib/StickerWrapper'
 import Storage from 'ROOT/lib/Storage'
+import ErrorHandler from 'ROOT/lib/ErrorHandler'
 
 class AuthCode extends Component {
   constructor() {
@@ -57,9 +58,7 @@ class AuthCode extends Component {
           .then(({user}) => {
             Store.setStateValue('user', user);
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch(err => ErrorHandler(err));
       }
     });
     let prevValue = '';

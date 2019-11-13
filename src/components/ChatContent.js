@@ -1,6 +1,9 @@
 import Component from "ROOT/lib/Component";
 import Store from "ROOT/store";
-import MTProtoClient from "ROOT/lib/mtproto";
+import ChatContentChannel from 'ROOT/components/ChatContentChannel'
+import ChatContentUser from 'ROOT/components/ChatContentUser'
+import ChatContentEmpty from 'ROOT/components/ChatContentEmpty'
+import ViewSwitcher from 'ROOT/lib/ViewSwitcher'
 
 class ChatContent extends Component {
   constructor () {
@@ -9,13 +12,21 @@ class ChatContent extends Component {
   }
 
   render (createEl) {
-    this.el = createEl('div', 'tg-chat-content', [
-      createEl('div', 'tg-chat-content-header', [
-        this.photo = createEl('div', 'tg-chat-list-item-photo empty')
-      ]),
-      this.content = createEl('div', 'tg-chat-content-content')
+    let chatsPlace;
+    this.el = createEl('div', 'tg-chat-content-container', [
+      chatsPlace = Component.createVoid()
     ]);
 
+    this.vs_ = new ViewSwitcher(
+      [
+        {name: 'channel', c: ChatContentChannel},
+        {name: 'user', c: ChatContentUser},
+        {name: 'default', c: ChatContentEmpty},
+      ],
+      chatsPlace
+    );
+
+    this.vs_.showView('default');
     Store.registerUpdate('activeChat', (chat) => this.activeChatUpdate(chat));
     return this.el;
   }
@@ -24,29 +35,7 @@ class ChatContent extends Component {
    * @param {ChatListItem|null} chatItem
    */
   activeChatUpdate (chatItem) {
-    this.photo.classList.toggle('empty', !chatItem);
-    if (chatItem) {
-      const messages = [];
-      for (let i = chatItem.lastMsg_.id - 10; i <= chatItem.lastMsg_.id; i++) {
-        const messageId = i;
-        messages.push({
-          _: 'inputMessageID',
-          id: i
-        });
-      }
-      MTProtoClient('messages.getMessages', {
-        id: messages
-      })
-        .then((p) => {
-          this.content.innerHTML = '';
-          p.messages.forEach((m) => {
-            this.content.appendChild(Component.createElement('div', 'tg-chat-message', [m.message || 'NO MESSAGE']));
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
+    this.vs_.showView(chatItem.peer_._);
   }
 }
 
