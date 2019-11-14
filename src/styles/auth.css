@@ -1,0 +1,38 @@
+.tg-auth {
+  margin: 0 auto;
+  max-width: 400px;
+  min-height: 100%;
+  padding: 108px 10px 0 10px;
+}
+
+.tg-auth tgs-player {
+  width: 166px;
+  height: 166px;
+  margin: 0 auto;
+}
+
+.tg-auth-code-phone {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tg-signup > .tg-logo {
+  background-image: url(./images/cameraadd_svg.svg);
+  background-color: #4EA4F6;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 48px;
+  cursor: pointer;
+  display: block;
+  position: relative;
+}
+
+.tg-image-editor-file {
+  visibility: hidden;
+  position: absolute;
+  z-index: -9999999;
+}
+
+
