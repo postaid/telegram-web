@@ -1,4 +1,6 @@
 const register = {};
+let queue = {};
+let updateTimer = null;
 
 const Store = {
   state: {
@@ -18,23 +20,39 @@ const Store = {
     if (this.state[name] !== val) {
       const old = this.state[name];
       this.state[name] = val;
-      this.emitUpdate(name, old, val);
-    }
-    console.log('STATE', this.state);
-  },
-  registerUpdate (name, fn) {
-    if (!register[name]) {
-      register[name] = [];
-    }
-    register[name].push(fn);
-  },
-  emitUpdate (name, old, val) {
-    if (register[name]) {
-      const fns = register[name];
-      for (let i = 0; i < fns.length; i++) {
-        fns[i](val, old);
+      this.addToQueue(name, old, val);
+      if (updateTimer) {
+        clearTimeout(updateTimer);
       }
+      updateTimer = setTimeout(() => this.emitUpdate(), 40);
     }
+  },
+  registerUpdate (names, fn) {
+    names = names.split(/\s*,\s*/);
+    for (let i = 0; i < names.length; i++) {
+      const name = names[i];
+      if (!register[name]) {
+        register[name] = [];
+      }
+      register[name].push(fn);
+    }
+  },
+  addToQueue (name, old, val) {
+    if (!queue[name]) {
+      queue[name] = [val, old];
+    }
+    queue[name][0] = val;
+  },
+  emitUpdate () {
+    Object.entries(queue).forEach(([name, data]) => {
+      if (register[name]) {
+        const fns = register[name];
+        for (let i = 0; i < fns.length; i++) {
+          fns[i](data[0], data[1]);
+        }
+      }
+    });
+    queue = {};
   }
 
 };

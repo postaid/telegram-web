@@ -23,13 +23,17 @@ class Component extends EventEmitter {
 
   }
 
-  static createElement (tag, props, children) {
+  static createElement (tag, props, children, ns) {
     let el;
     if (tag === '#text') {
       el = document.createTextNode(props || '');
       return el;
     } else {
-      el = document.createElement(tag);
+      if (ns) {
+        el = document.createElementNS(ns, tag);
+      } else {
+        el = document.createElement(tag);
+      }
       if (props) {
         if (typeof props === 'string') {
           el.className = props;

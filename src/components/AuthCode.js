@@ -52,13 +52,26 @@ class AuthCode extends Component {
       if (value.length === 5 ) {
         MTProtoClient('auth.signIn', {
           phone_number   : Store.getStateValue('phone').replace(/[^0-9+]/g, ''),
-          phone_code_hash: Store.getStateValue('phone_code_hash'),
+          phone_code_hash: Store.getStateValue('phoneCodeHash'),
           phone_code     : value
         })
-          .then(({user}) => {
-            Store.setStateValue('user', user);
+          .then((data) => {
+            inpCode.el.classList.remove('error');
+            if (data._ === 'auth.authorizationSignUpRequired') {
+              Store.setStateValue('signUpRequired', true);
+            } else {
+              Store.setStateValue('user', data.user);
+              Store.setStateValue('authorized', true);
+            }
           })
-          .catch(err => ErrorHandler(err));
+          .catch((err) => {
+            if (err.type === 'PHONE_CODE_INVALID') {
+              inpCode.el.classList.add('error');
+            } else {
+              ErrorHandler(err);
+            }
+            return err;
+          });
       }
     });
     let prevValue = '';

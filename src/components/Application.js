@@ -12,9 +12,9 @@ class Application extends Component {
   constructor () {
     super();
     this.views_ = [
-      {name: 'auth', c: Auth, e: null},
-      {name: 'code', c: AuthCode, e: null},
-      {name: 'chats', c: ChatsList, e: null},
+      { name: 'auth', c: Auth, e: null },
+      { name: 'code', c: AuthCode, e: null },
+      { name: 'chats', c: ChatsList, e: null },
     ];
     this.render();
   }
@@ -28,32 +28,37 @@ class Application extends Component {
     Store.registerUpdate('user', () => {
       this.update();
     });
-    Store.registerUpdate('phone_code_hash', () => {
-      this.update();
-    });
-    Store.registerUpdate('phone_hash_pending', (val) => {
-      if (val) {
-        const view = this.getView('code');
-        if (view && !view.e) {
-          view.e = new view.c();
-        }
-      }
-    });
+    /*
+        Store.registerUpdate('phone_code_hash', () => {
+          this.update();
+        });
+        Store.registerUpdate('phone_hash_pending', (val) => {
+          if (val) {
+            const view = this.getView('code');
+            if (view && !view.e) {
+              view.e = new view.c();
+            }
+          }
+        });
+    */
     Store.registerUpdate('authorized', (val) => {
       this.update();
     });
     this.update();
 
-    const dc = await Storage.get('dc');
-    if (dc) {
-      const authKey = await Storage.get(`dc${dc}_auth_key`);
-      if (authKey) {
-        Store.setStateValue('authorized', true);
-        this.showView('chats');
-      }
-    }
+    /*
+        const dc = await Storage.get('dc');
+        if (dc) {
+          const authKey = await Storage.get(`dc${dc}_auth_key`);
+          if (authKey) {
+            Store.setStateValue('authorized', true);
+            this.showView('chats');
+          }
+        }
+    */
     MTProtoClient('help.getNearestDc', {})
-      .then(() => {})
+      .then(() => {
+      })
       .catch(err => ErrorHandler(err));
 
     console.timeEnd('APP RENDER');
@@ -65,15 +70,18 @@ class Application extends Component {
     if (authorized) {
       this.showView('chats')
     } else {
-      const user = Store.getStateValue('user');
-      const phone_code_hash = Store.getStateValue('phone_code_hash');
-      if (!user && !phone_code_hash) {
-        this.showView('auth');
-      } else if (!user && phone_code_hash) {
-        this.showView('code');
-      } else {
-        this.showView('chats');
-      }
+      this.showView('auth');
+      /*
+            const user = Store.getStateValue('user');
+            const phone_code_hash = Store.getStateValue('phone_code_hash');
+            if (!user && !phone_code_hash) {
+              this.showView('auth');
+            } else if (!user && phone_code_hash) {
+              this.showView('code');
+            } else {
+              this.showView('chats');
+            }
+      */
     }
   }
 

@@ -3,13 +3,6 @@
   overflow-y: scroll;
 }
 
-.tg-auth {
-  margin: 0 auto;
-  max-width: 380px;
-  min-height: 100%;
-  padding-top: 108px;
-}
-
 .tg-logo {
   background-image: url(./images/tg_logo160x160.png);
   width: 160px;
@@ -216,19 +209,6 @@ notempty
   border-radius: 8px;
 }
 
-.tg-auth > tgs-player {
-  width: 166px;
-  height: 166px;
-  margin: 0 auto;
-}
-
-.tg-auth-code-phone {
-  margin-top: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .tg-button.tg-button-nofill {
   font-size: 37px;
   width: 1em;
@@ -239,4 +219,8 @@ notempty
 
 .tg-button.tg-button-nofill:hover {
   color: black;
+}
+
+body.tg-cursor-move * {
+  cursor: move !important;
 }

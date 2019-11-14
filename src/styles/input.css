@@ -5,6 +5,10 @@
   margin-top: 48px;
 }
 
+.tg-input + .tg-input {
+  margin-top: 24px;
+}
+
 .tg-input-input {
   border: 1px solid rgb(117, 117, 117);
   outline: none;
@@ -20,12 +24,12 @@
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(18px, 18px);
+  transform: translate(12px, 12px);
   transform-origin: 0 50%;
-  transition: transform .2s linear;
+  transition: transform .1s linear;
   color: rgba(0, 0, 0, 0.5);
   background-color: white;
-  outline: solid 2px white;
+  border: solid 6px white;
   pointer-events: none;
 }
 
@@ -46,10 +50,26 @@
 
 .tg-input.focused > .tg-input-label,
 .tg-input.notempty > .tg-input-label {
-  transform: translate(18px, -6px) scale(0.8);
+  transform: translate(18px, -12px) scale(0.7);
+  font-weight: 500;
 }
 
 .tg-input.focused > .tg-input-label,
 .tg-input.focused.notempty:hover > .tg-input-label {
   color: #4EA4F6;
 }
+
+.tg-input.error .tg-input-input,
+.tg-input.error .tg-input.focused > .tg-input-input {
+  border-color: red;
+}
+
+.tg-input.error .tg-input-label,
+.tg-input.error .tg-input.notempty:hover > .tg-input-label,
+.tg-input.error .tg-input.focused > .tg-input-label,
+.tg-input.error .tg-input.focused.notempty:hover > .tg-input-label,
+.tg-input.error .tg-input.notempty:hover > .tg-input-label
+{
+  color: red !important;
+}
+

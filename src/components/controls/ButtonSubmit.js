@@ -1,7 +1,7 @@
 import Component from 'ROOT/lib/Component';
 
 // TODO: RIPPLES
-class Button extends Component {
+class ButtonSubmit extends Component {
   constructor (icon, label) {
     super();
     this.icon_ = icon;
@@ -25,4 +25,4 @@ class Button extends Component {
   }
 }
 
-export default Button;
+export default ButtonSubmit;
