@@ -64,6 +64,11 @@ class ImageEditor extends Component {
   }
 
   dragStart (ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    if (ev.touches.length) {
+      ev = ev.touches[0];
+    }
     document.addEventListener('mousemove', this.mDrag_);
     document.addEventListener('touchmove', this.mDrag_);
     document.addEventListener('mouseup', this.mDragEnd_);
@@ -85,6 +90,11 @@ class ImageEditor extends Component {
   }
 
   drag (ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    if (ev.touches.length) {
+      ev = ev.touches[0];
+    }
     const dx = ev.pageX - this.drag_.x;
     const dy = ev.pageY - this.drag_.y;
     this.drag_.x = ev.pageX;
@@ -107,7 +117,7 @@ class ImageEditor extends Component {
   cropImage () {
     const img = this.imgEl;
     const position = this.position_;
-    const size = this.selector.offsetWidth;
+    const size = this.selector.offsetWidth / (window.devicePixelRatio || 1);
 
     const canvas = document.createElement('canvas');
     canvas.style.cssText = 'position: fixed; top: 0; left: 0';
