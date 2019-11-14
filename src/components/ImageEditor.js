@@ -66,7 +66,7 @@ class ImageEditor extends Component {
   dragStart (ev) {
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.touches.length) {
+    if (ev.touches && ev.touches.length) {
       ev = ev.touches[0];
     }
     document.addEventListener('mousemove', this.mDrag_);
@@ -92,7 +92,7 @@ class ImageEditor extends Component {
   drag (ev) {
     ev.preventDefault();
     ev.stopPropagation();
-    if (ev.touches.length) {
+    if (ev.touches && ev.touches.length) {
       ev = ev.touches[0];
     }
     const dx = ev.pageX - this.drag_.x;
