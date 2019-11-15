@@ -7,6 +7,7 @@ import InputPhone from 'ROOT/components/controls/InputPhone'
 import Checkbox from 'ROOT/components/controls/Checkbox'
 import Button from 'ROOT/components/controls/Button'
 import Config from 'ROOT/config'
+import ButtonSubmit from "ROOT/components/controls/ButtonSubmit";
 
 const createEl = Component.createElement;
 

@@ -19,8 +19,26 @@ class Button extends Component {
     this.el = createEl('div', 'tg-button', children);
     this.el.addEventListener('click', () => {
       this.emit('action');
-    })
+    });
+    this.el.addEventListener('mousedown', (ev) => this.showRipple(ev));
+    this.el.addEventListener('touchstart', (ev) => this.showRipple(ev));
     return this.el;
+  }
+
+  showRipple (ev) {
+    this.el.classList.add('has-ripple');
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple ripple-animate';
+    const size = Math.max(this.el.offsetWidth, this.el.offsetHeight);
+    ripple.style.width = size + 'px';
+    ripple.style.height = size + 'px';
+
+    let x = ev.pageX - this.el.offsetLeft - size / 2;
+    let y = ev.pageY - this.el.offsetTop - size / 2;
+
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    this.el.appendChild(ripple);
   }
 }
 

@@ -31,13 +31,16 @@ class Auth extends Component {
     const userPhone = Store.getStateValue('phone');
     const userPhoneHash = Store.getStateValue('phoneCodeHash');
     const userSignUp = Store.getStateValue('signUpRequired');
-    if (1 || userSignUp) {
+    this.vs_.showView('signup');
+/*
+    if (userSignUp) {
       this.vs_.showView('signup');
     } else if (userPhone && userPhoneHash) {
       this.vs_.showView('code');
     } else {
       this.vs_.showView('signin');
     }
+*/
   }
 
 }
