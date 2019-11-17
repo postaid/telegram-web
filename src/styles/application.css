@@ -1,10 +1,10 @@
 .tg-app {
-  height: 100%;
-  overflow-y: scroll;
 }
 
 .tg-logo {
   background-image: url(./images/tg_logo160x160.png);
+  background-repeat: no-repeat;
+  background-position: center;
   width: 160px;
   height: 160px;
   margin: 0 auto 50px;
@@ -198,9 +198,10 @@ notempty
   color: #ffffff;
   text-transform: uppercase;
   font-size: 16px;
+  user-select: none;
 }
 
-.tg-button.tg-button-submit:hover:after {
+.tg-button.tg-button-submit:hover:before {
   content: "";
   position: absolute;
   top: 0;
@@ -209,6 +210,7 @@ notempty
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.08);
   border-radius: 8px;
+  pointer-events: none;
 }
 
 .tg-button.tg-button-nofill {
@@ -227,3 +229,21 @@ body.tg-cursor-move * {
   cursor: move !important;
 }
 
+.tg-button-submit .tg-button-submit-label {
+  position: relative;
+}
+
+.tg-button.tg-button-submit .IconLoader {
+  position: absolute;
+  right: 13px;
+  width: 28px;
+  height: 28px;
+}
+
+.full-stretch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}

@@ -96,6 +96,11 @@ class ChatsList extends Component {
   chatListItemClick (item) {
     Store.setStateValue('activeChat', item);
   }
+
+  beforeShow () {
+    document.body.style.backgroundColor = 'rgb(230,235,238)';
+  }
+
 }
 
 export default ChatsList

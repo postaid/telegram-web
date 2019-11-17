@@ -1,4 +1,5 @@
 import Component from 'ROOT/lib/Component';
+import Ripple from 'ROOT/components/Ripple'
 
 class Button extends Component {
   constructor (icon, label) {
@@ -9,7 +10,10 @@ class Button extends Component {
   }
 
   render (createEl) {
-    const children = [];
+    let rippleEl;
+    const children = [
+      rippleEl = createEl('div', 'full-stretch')
+    ];
     if (this.icon_) {
       children.push(this.icon_);
     }
@@ -20,25 +24,10 @@ class Button extends Component {
     this.el.addEventListener('click', () => {
       this.emit('action');
     });
-    this.el.addEventListener('mousedown', (ev) => this.showRipple(ev));
-    this.el.addEventListener('touchstart', (ev) => this.showRipple(ev));
+    const ripple = new Ripple(rippleEl);
+    this.el.addEventListener('mousedown', (ev) => ripple.show(ev));
+    this.el.addEventListener('touchstart', (ev) => ripple.show(ev));
     return this.el;
-  }
-
-  showRipple (ev) {
-    this.el.classList.add('has-ripple');
-    const ripple = document.createElement('span');
-    ripple.className = 'ripple ripple-animate';
-    const size = Math.max(this.el.offsetWidth, this.el.offsetHeight);
-    ripple.style.width = size + 'px';
-    ripple.style.height = size + 'px';
-
-    let x = ev.pageX - this.el.offsetLeft - size / 2;
-    let y = ev.pageY - this.el.offsetTop - size / 2;
-
-    ripple.style.left = x + 'px';
-    ripple.style.top = y + 'px';
-    this.el.appendChild(ripple);
   }
 }
 

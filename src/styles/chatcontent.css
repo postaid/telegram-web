@@ -17,29 +17,93 @@
 .tg-chat-content-header > .tg-chat-list-item-photo {
     margin-top: 0;
     margin-left: 20px;
+    margin-right: 16px;
     height: 44px;
     width: 44px;
+}
+
+.tg-chat-content-header .tg-chat-list-item-message.online {
+    color: #30A3E6;
 }
 
 .tg-chat-content-header > .tg-chat-list-item-photo.empty {
     background-color: #DADCE0;
 }
 
-.tg-chat-message {
-    margin-top: 10px;
-}
-
 .tg-chat-content-content {
     max-width: 698px;
     margin: 0 auto;
+    padding-top: 10px;
 }
 
-.tg-chat-message-channel {
-    background-color: white;
-    padding: 10px;
-    margin-bottom: 4px;
+.tg-chat-message {
+    margin-bottom: 10px;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 3px;
+    clear: both;
+}
+
+.tg-chat-message-inner {
+    display: inline-block;
+    position: relative;
+    padding: 10px;
 }
 
 
+.tg-chat-message-content {
+    position: relative;
+    padding-right: 8px;
+}
+
+.tg-chat-message-bubble {
+    position: absolute;
+    top: 0;
+    left: -20px;
+    color: white;
+}
+
+.tg-chat-message.user.output .tg-chat-message-bubble {
+    transform: scale(-1, 1);
+    left: -10px;
+    color: #EEFFDE;
+}
+
+.tg-chat-message-sub-info {
+    white-space: nowrap;
+    float: right;
+    color: rgb(170,179,187);
+    font-size: 12px;
+    position: relative;
+    margin-left: 8px;
+    top: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.tg-shat-message-sub-info-item {
+}
+
+.tg-chat-message-sub-info-item.message-sent {
+    color: rgb(170,179,187);
+    top: 2px;
+    position: relative;
+}
+
+.tg-chat-message-sub-info-item.message-sent.done {
+    color: #4FAF4E;
+}
+
+.tg-chat-message.user.output .tg-chat-message-sub-info {
+    color: #4FAF4E;
+}
+
+.tg-chat-message.user.output {
+    margin-left: 96px;
+    margin-right: 0;
+    float: right;
+}
+
+.tg-chat-message.user {
+    margin-left: 0;
+    margin-right: 96px;
+    float: left;
+}

@@ -1,4 +1,4 @@
-import ChatContentEmpty from 'ROOT/components/ChatContentEmpty';
+import ChatContentEmpty from 'ROOT/components/chatcontent/ChatContentEmpty';
 import ChatMessageChannel from 'ROOT/components/ChatMessageChannel'
 import Store from 'ROOT/store'
 

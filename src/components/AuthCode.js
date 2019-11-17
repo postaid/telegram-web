@@ -7,6 +7,7 @@ import Input from 'ROOT/components/controls/Input'
 import StickerWrapper from 'ROOT/lib/StickerWrapper'
 import Storage from 'ROOT/lib/Storage'
 import ErrorHandler from 'ROOT/lib/ErrorHandler'
+import Config from 'ROOT/config'
 
 class AuthCode extends Component {
   constructor() {
@@ -46,7 +47,7 @@ class AuthCode extends Component {
     const stickerWrapper = new StickerWrapper(sticker);
 
     btnEdit.on('action', () => {
-      Store.setStateValue('phone_code_hash', '');
+      Store.setStateValue('phoneCodeHash', '');
     });
     inpCode.on('input', (value) => {
       if (value.length === 5 ) {
@@ -54,19 +55,24 @@ class AuthCode extends Component {
           phone_number   : Store.getStateValue('phone').replace(/[^0-9+]/g, ''),
           phone_code_hash: Store.getStateValue('phoneCodeHash'),
           phone_code     : value
-        })
+        }, {dcID: 2})
           .then((data) => {
             inpCode.el.classList.remove('error');
             if (data._ === 'auth.authorizationSignUpRequired') {
               Store.setStateValue('signUpRequired', true);
             } else {
+              window.history.replaceState({}, '', '/');
               Store.setStateValue('user', data.user);
               Store.setStateValue('authorized', true);
+              Storage.set('user_id', data.user.id);
+              Storage.set('user_hash', data.user.access_hash);
             }
           })
           .catch((err) => {
             if (err.type === 'PHONE_CODE_INVALID') {
               inpCode.el.classList.add('error');
+            } else if (err.type === 'PHONE_CODE_EXPIRED') {
+              ErrorHandler(err);
             } else {
               ErrorHandler(err);
             }

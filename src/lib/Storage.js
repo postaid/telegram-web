@@ -1,10 +1,11 @@
 import localforage from 'localforage';
+import Config from 'ROOT/config'
 
 localforage.config({
   driver      : localforage.LOCALSTORAGE, // Force WebSQL; same as using setDriver()
-  name        : 'telegram',
+  name        : Config.modes.test ? 'tgweb_test' : 'tgweb',
   version     : 1.0,
-  storeName   : 'telegram', // Should be alphanumeric, with underscores.
+  storeName   : 'auth', // Should be alphanumeric, with underscores.
 });
 
 export default {

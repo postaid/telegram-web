@@ -28,48 +28,61 @@ class Application extends Component {
     Store.registerUpdate('user', () => {
       this.update();
     });
-    /*
-        Store.registerUpdate('phone_code_hash', () => {
-          this.update();
-        });
-        Store.registerUpdate('phone_hash_pending', (val) => {
-          if (val) {
-            const view = this.getView('code');
-            if (view && !view.e) {
-              view.e = new view.c();
-            }
-          }
-        });
-    */
     Store.registerUpdate('authorized', (val) => {
       this.update();
     });
-    this.update();
 
-    /*
-        const dc = await Storage.get('dc');
-        if (dc) {
-          const authKey = await Storage.get(`dc${dc}_auth_key`);
-          if (authKey) {
-            Store.setStateValue('authorized', true);
-            this.showView('chats');
-          }
+    const url = new URL(window.location.href);
+
+  if (url.searchParams.has('auth')) {
+    Store.setStateValue('authorized', false);
+  } else {
+    const userId = await Storage.get('user_id');
+    if (!userId) {
+      Store.setStateValue('authorized', false);
+    } else {
+      const userHash = await Storage.get('user_hash');
+      MTProtoClient('users.getFullUser', {
+        id: {
+          _: 'inputUser',
+          user_id: userId,
+          access_hash: userHash
         }
-    */
-    MTProtoClient('help.getNearestDc', {})
-      .then(() => {
-      })
-      .catch(err => ErrorHandler(err));
+      }).then((data) => {
+        alert(1);
+        Store.setStateValue('user', data.user);
+        Store.setStateValue('authorized', true);
+      }, (err) => {
+        alert(2);
+        if (err.code === 401) {
+          url.searchParams.set('auth', '');
+          window.location.href = url.toString();
+        }
+      });
+    }
+  }
+ /*   MTProtoClient('help.getConfig', {})
+      .then((date) => {
+        debugger;
+        // Store.setStateValue('authorized', true);
 
-    console.timeEnd('APP RENDER');
+      }, err => {
+        debugger;
+        ErrorHandler(err)
+      });
+
+ */   console.timeEnd('APP RENDER');
     return el;
   }
+
 
   async update () {
     const authorized = Store.getStateValue('authorized');
     if (authorized) {
+      document.body.style.backgroundColor = 'rgb(230,235,238)';
       this.showView('chats')
     } else {
+      document.body.style.backgroundColor = 'white';
       this.showView('auth');
       /*
             const user = Store.getStateValue('user');

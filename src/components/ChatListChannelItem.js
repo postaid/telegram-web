@@ -9,6 +9,10 @@ class ChatListChannelItem extends ChatListItem {
     return this.peer_.title || this.peer_.username;
   }
 
+  getShortTitle () {
+    return this.getTitle()[0];
+  }
+
   getItemPhotoData () {
     const photoData = this.peer_.photo;
     if (!photoData) {
@@ -18,13 +22,14 @@ class ChatListChannelItem extends ChatListItem {
     switch (photoData._) {
       case 'chatPhoto':
         return [
-          photoData.photo_id,
+          this.peer_.id,
           {
             _: 'inputPeerChannel',
             channel_id: this.peer_.id,
             access_hash: this.peer_.access_hash
           },
-          photoData.photo_small
+          photoData.photo_small,
+          photoData.dc_id
         ];
     }
     return null;

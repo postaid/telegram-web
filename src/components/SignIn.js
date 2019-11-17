@@ -30,7 +30,7 @@ class SignIn extends Component {
       new CountrySelect('country_select_label'),
       new InputPhone('phone_number_label'),
       cbKeepSignIn = new Checkbox('keep_sign_in_label'),
-      this.btnNext_ = new Button('', 'continue_sign_in_label')
+      this.btnNext_ = new ButtonSubmit('', this.i18n.t('continue_sign_in_label'))
     ]);
     cbKeepSignIn.el.style.marginTop = '11px';
     this.btnNext_.el.classList.add('tg-button-submit');
@@ -45,6 +45,8 @@ class SignIn extends Component {
     });
 
     this.btnNext_.on('action', () => {
+      this.btnNext_.showLoader();
+      this.btnNext_.setLabel(this.i18n.t('wait_label'));
       MTProtoClient('auth.sendCode', {
         phone_number  : Store.getStateValue('phone'),
         current_number: false,
@@ -53,13 +55,12 @@ class SignIn extends Component {
         settings      : {
           _: 'codeSettings',
           flags: 0,
-          allow_flashcall: true,
-          current_number: true,
-          allow_app_hash: true,
         },
-      }).then((data) => {
+      }, {dcID: 2}).then((data) => {
         Store.setStateValue('phoneCodeHash', data.phone_code_hash);
       }, (error) => {
+        this.btnNext_.hideLoader();
+        this.btnNext_.setLabel(this.i18n.t('continue_sign_in_label'));
         console.error(error);
       })
     });

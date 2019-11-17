@@ -1,5 +1,4 @@
 .has-ripple {
-    position: relative;
     overflow: hidden;
     -webkit-transform: translate3d(0,0,0);
     -o-transform: translate3d(0,0,0);
@@ -25,12 +24,17 @@
     -o-animation: ripple;
     animation: ripple;
 
-    animation-duration: .3s;
+    animation-duration: .5s;
     animation-timing-function: linear;
     background: rgba(0, 0, 0, .08);
 }
 
 @-webkit-keyframes ripple {
+    0% {
+        opacity: 1;
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
     100% {
         opacity: 0;
         -webkit-transform: scale(2);
@@ -39,6 +43,11 @@
 }
 
 @-o-keyframes ripple {
+    0% {
+        opacity: 1;
+        -o-transform: scale(0);
+        transform: scale(0);
+    }
     100% {
         opacity: 0;
         -o-transform: scale(2);
@@ -47,6 +56,10 @@
 }
 
 @keyframes ripple {
+    0% {
+        opacity: 1;
+        transform: scale(0);
+    }
     100% {
         opacity: 0;
         transform: scale(2);

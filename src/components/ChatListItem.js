@@ -1,6 +1,7 @@
 import Component from "ROOT/lib/Component";
 import { formatMessage, getPhoto } from "ROOT/lib/TelegramMessage";
 import ErrorHandler from 'ROOT/lib/ErrorHandler'
+import Ripple from 'ROOT/components/Ripple'
 
 class ChatListItem extends Component {
   constructor (dialog, peer, lastMsg) {
@@ -26,11 +27,13 @@ class ChatListItem extends Component {
   }
 
   createItem(createEl, title, message, time, unreadCount) {
+    let rippleEl;
     this.el = createEl('div', {
       class: 'tg-chat-list-item',
       id: this.peer_.id
     }, [
-      this.photo_ = createEl('div', 'tg-chat-list-item-photo'),
+      this.photo_ = createEl('div', 'tg-chat-list-item-photo', [this.getShortTitle()]),
+      rippleEl = createEl('div', 'full-stretch'),
       this.onlineStatus_ = this.isOnline() ? createEl('div', 'tg-chat-list-item-online') : Component.createVoid(),
       createEl('div', 'tg-chat-list-item-texts', [
         createEl('div', 'tg-chat-list-item-top', [
@@ -45,6 +48,14 @@ class ChatListItem extends Component {
         ])
       ])
     ]);
+
+    if (this.isSilent()) {
+      this.el.classList.add('mute');
+    }
+
+    const ripple = new Ripple(rippleEl);
+    this.el.addEventListener('mousedown', (ev) => ripple.show(ev));
+    this.el.addEventListener('touchstart', (ev) => ripple.show(ev));
     return this.el;
   }
 
@@ -55,11 +66,17 @@ class ChatListItem extends Component {
   getItemPhoto () {
     let photoData = this.getItemPhotoData();
     if (photoData) {
+      const fnDone = (objectUrl) => {
+        this.photo_.style.backgroundImage = `url(${objectUrl})`;
+        this.photo_.innerHTML = '';
+      }
+      const fnReject = (err) => {
+       return ErrorHandler(err);
+      }
+
       getPhoto(photoData)
-        .then((objectUrl) => {
-          this.photo_.style.backgroundImage = `url(${objectUrl})`;
-        })
-        .catch(err => ErrorHandler(err));
+        .then(fnDone)
+        .catch(fnReject);
     }
   }
 
@@ -85,7 +102,19 @@ class ChatListItem extends Component {
     return '__TITLE__';
   }
 
+  getShortTitle () {
+    return 'C';
+  }
+
   isOnline () {
+    return false;
+  }
+
+  isSilent () {
+    const notify = this.dialog_.notify_settings;
+    if (notify._ === 'peerNotifySettings') {
+      return !!notify.mute_until;
+    }
     return false;
   }
 

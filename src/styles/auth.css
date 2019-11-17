@@ -19,10 +19,8 @@
 }
 
 .tg-signup > .tg-logo {
-  background-image: url(./images/cameraadd_svg.svg);
+  background-image: none; /*url(./images/cameraadd_svg.svg);*/
   background-color: #4EA4F6;
-  background-repeat: no-repeat;
-  background-position: center;
   background-size: 48px;
   cursor: pointer;
   display: block;
@@ -35,4 +33,17 @@
   z-index: -9999999;
 }
 
+.tg-logo.add-photo {
+  background-image: url(./images/cameraadd_svg.svg);
+  background-color: transparent;
+  background-size: 48px;
+}
+
+.tg-signup.has-photo .tg-logo.add-photo {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.tg-signup .tg-button-submit {
+  margin-top: 24px;
+}
 

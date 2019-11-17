@@ -9,8 +9,7 @@ const Store = {
     country: null,
     phone: '+79033529067',
     keepSignIn: true,
-    phone_code_hash: '',
-    phone_hash_pending: false,
+    phoneCodeHash: '',
     activeChat: null,
   },
   getStateValue (name) {

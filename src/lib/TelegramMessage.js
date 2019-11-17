@@ -6,20 +6,29 @@ function formatMessage (message, limit = -1) {
   if (limit !== -1) {
     text = text.slice(0, limit);
   }
-  const textLn = text.length;
+
+  const ents = [];
+  // todo: add other entities, check algo
   for (let i = entities.length - 1; i >= 0; i--) {
     const e = entities[i];
     switch (e._) {
       case 'messageEntityBold':
-        if (e.offset <= textLn) {
-          text = text.slice(0, e.offset) + '<b>'
-            + text.slice(e.offset, e.offset + e.length) + '</b>'
-            + text.slice(e.offset + e.length);
-        }
+        ents.push([e.offset, '<b>'], [e.offset + e.length, '</b>'])
         break;
     }
   }
-  return text;
+  ents.sort((a, b) => a[0] - b[0]);
+  let resText = ''
+  let index = 0;
+  for (let i = 0; i < ents.length; i++) {
+    const ent = ents[i];
+    resText += text.slice(index, ent[0]) + ent[1];
+    index = ent[0];
+  }
+  if (index < text.length) {
+    resText += text.slice(index);
+  }
+  return resText;
 }
 
 const photos = {};
@@ -42,7 +51,11 @@ function getPhoto ([id, peer, loc, dc_id]) {
           resolve(data);
           return data;
         })
-        .catch(err => reject(err));
+        .catch(err => {
+          photosPending[id] = null;
+          reject(err);
+          return err;
+        });
     }
   });
 }
@@ -67,6 +80,7 @@ function _getPhoto (peer, loc, dcID) {
     if (dcID) {
       options.dcID = dcID;
     }
+    options.createNetworker = true;
     let bytes = [];
 
     const fnGetParts = () => {
@@ -74,7 +88,7 @@ function _getPhoto (peer, loc, dcID) {
         .then((data) => {
           switch (data.type._) {
             case 'storage.fileUnknown':
-              resolve(URL.createObjectURL(new Blob(bytes)));
+              resolve(URL.createObjectURL(new Blob([bytes])));
               break;
             case 'storage.filePartial':
               params.offset += params.limit;
@@ -82,7 +96,6 @@ function _getPhoto (peer, loc, dcID) {
               if (bytesCount) {
                 bytes.push(data.bytes);
                 if (bytesCount < params.limit) {
-                  bytes = Array.prototype.concat.apply([], bytes);
                   const blob = new Blob(bytes);
                   resolve(URL.createObjectURL(blob));
                 } else {
@@ -94,7 +107,7 @@ function _getPhoto (peer, loc, dcID) {
               break;
             default:
               const type = data.type._.replace('storage.file', '');
-              const blob = new Blob(data.bytes, { type: 'image/' + type.toLowerCase() });
+              const blob = new Blob([data.bytes], { type: 'image/' + type.toLowerCase() });
               const url = URL.createObjectURL(blob)
               resolve(url);
               break;

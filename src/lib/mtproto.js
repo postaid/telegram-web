@@ -1,6 +1,6 @@
 import MTProto from 'telegram-mtproto';
 import Storage from 'ROOT/lib/Storage';
-import Config from '../config.js';
+import Config from 'ROOT/config';
 
 const phone = {
   num : '+9996620001',
@@ -15,7 +15,7 @@ const api = {
 
 const server = {
   dev: Config.modes.test,
-  webogram: false,
+  webogram: true,
 }
 
 const MTProtoClient = MTProto({ server, api,
@@ -45,6 +45,7 @@ const MTProtoClient = MTProto({ server, api,
     }
   ]
 });
+
 export default MTProtoClient;
 
 /**

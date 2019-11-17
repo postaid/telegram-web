@@ -31,8 +31,8 @@ class Auth extends Component {
     const userPhone = Store.getStateValue('phone');
     const userPhoneHash = Store.getStateValue('phoneCodeHash');
     const userSignUp = Store.getStateValue('signUpRequired');
-    this.vs_.showView('signup');
-/*
+    // this.vs_.showView('signin');
+    // this.vs_.showView('signup');
     if (userSignUp) {
       this.vs_.showView('signup');
     } else if (userPhone && userPhoneHash) {
@@ -40,7 +40,10 @@ class Auth extends Component {
     } else {
       this.vs_.showView('signin');
     }
-*/
+  }
+
+  beforeShow () {
+    document.body.style.backgroundColor = 'white';
   }
 
 }

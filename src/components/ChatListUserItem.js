@@ -17,6 +17,23 @@ class ChatListUserItem extends ChatListItem {
     return title;
   }
 
+  getShortTitle () {
+    let title = '';
+    if (this.peer_.deleted) {
+      title = 'D';
+    } else {
+      let fName = this.peer_.first_name || '';
+      let lName = this.peer_.last_name || '';
+      if (fName) {
+        title += fName[0];
+      }
+      if (lName) {
+        title += lName[0];
+      }
+    }
+    return title;
+  }
+
   isOnline () {
     return this.peer_.status && this.peer_.status._ === 'userStatusOnline';
   }
@@ -33,8 +50,8 @@ class ChatListUserItem extends ChatListItem {
           photoData.photo_id,
           {
             _: 'inputPeerUser',
-            user_id: this.peer_.id,
-            access_hash: this.peer_.access_hash + 0
+            user_id: this.dialog_.peer.user_id,
+            access_hash: this.peer_.access_hash
           },
           photoData.photo_small,
           photoData.dc_id

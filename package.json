@@ -3,7 +3,7 @@
     "@lottiefiles/lottie-player": "^0.3.0-rc2",
     "@lottiefiles/tgskit": "0.0.4",
     "npm": "^6.13.0",
-    "telegram-mtproto": "^2.2.2",
+    "@postaid/telegram-mtproto": "^2.2.2",
     "worker-loader": "^2.0.0"
   },
   "scripts": {

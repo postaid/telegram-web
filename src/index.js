@@ -8,6 +8,7 @@ import 'ROOT/styles/chatcontent.css';
 import 'ROOT/styles/auth.css';
 import 'ROOT/styles/imageeditor.css';
 import 'ROOT/styles/ripple.css';
+import 'ROOT/styles/loader.css';
 
 import 'ROOT/images/tg_logo160x160.png';
 import 'ROOT/images/flags.png';

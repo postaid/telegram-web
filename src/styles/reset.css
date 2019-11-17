@@ -5,14 +5,9 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html {
-  height: 100%;
-}
-
 body {
   font: 14px/18px Roboto,sans-serif,Arial,Helvetica;
-  /*overflow-y: scroll;*/
-  height: 100%
+  overflow-y: scroll;
 }
 
 input {

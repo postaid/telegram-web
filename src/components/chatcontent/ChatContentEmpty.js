@@ -22,10 +22,6 @@ class ChatContentEmpty extends Component {
       ]),
       this.content = createEl('div', 'tg-chat-content-content')
     ]);
-
-    this.updateAdditionalInfo(createEl);
-    this.updatePhoto();
-    this.updateMessages();
    }
 
   updateAdditionalInfo (createEl) {

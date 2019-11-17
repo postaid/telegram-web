@@ -6,7 +6,7 @@ const Config = {
     hash: '632d9465ad637486b332ecdb2cb6df00'
   },
   modes: {
-    test: true,
+    test: false,
   },
   CountryCodes: [
     // ['AB', 'country_select_country_ab', '+7 840', '+7 940', '+995 44'],
