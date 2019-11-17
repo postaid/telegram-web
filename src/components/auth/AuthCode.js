@@ -71,8 +71,8 @@ class AuthCode extends Component {
           .catch((err) => {
             if (err.type === 'PHONE_CODE_INVALID') {
               inpCode.el.classList.add('error');
-            } else if (err.type === 'PHONE_CODE_EXPIRED') {
-              ErrorHandler(err);
+            } else if (err.type === 'SESSION_PASSWORD_NEEDED') {
+              Store.setStateValue('sessPwdNeeded', true);
             } else {
               ErrorHandler(err);
             }

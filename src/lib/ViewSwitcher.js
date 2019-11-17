@@ -25,6 +25,9 @@ class ViewSwitcher {
     }
     const curView = this.views_[this.currentView_];
     if (curView && curView.e && curView.e.el.parentNode) {
+      if (curView.e.beforeHide) {
+        curView.e.beforeHide();
+      }
       curView.e.el.parentNode.insertBefore(this.placeholder_, curView.e.el);
       curView.e.el.parentNode.removeChild(curView.e.el);
     }

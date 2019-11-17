@@ -15,7 +15,7 @@ class ButtonSubmit extends Component {
   render (createEl) {
     let rippleEl;
     const children = [
-      rippleEl = createEl('div', 'full-stretch')
+      rippleEl = createEl('div', 'full-stretch tg-button-ripples')
     ];
     if (this.icon_) {
       children.push(this.icon_);

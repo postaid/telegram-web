@@ -71,8 +71,14 @@
   border-radius: 50%;
   color: white;
   background-color: #4EA4F6;
-  padding-left: 16px;
-  padding-top: 16px;
   cursor: pointer;
+}
+
+.tg-image-editor-wnd .tg-button-submit:hover:before {
+  border-radius: 50%;
+}
+
+.tg-image-editor-wnd .full-stretch {
+  border-radius: 50%;
 }
 

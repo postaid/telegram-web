@@ -1,12 +1,11 @@
 import Component from "ROOT/lib/Component";
 
-import Auth from "ROOT/components/Auth";
-import AuthCode from 'ROOT/components/AuthCode';
+import Auth from "ROOT/components/auth/Auth";
+import AuthCode from 'ROOT/components/auth/AuthCode';
 import ChatsList from 'ROOT/components/ChatsList'
 import Store from "ROOT/store";
 import Storage from 'ROOT/lib/Storage';
 import MTProtoClient from "ROOT/lib/mtproto";
-import ErrorHandler from 'ROOT/lib/ErrorHandler'
 
 class Application extends Component {
   constructor () {
@@ -34,42 +33,32 @@ class Application extends Component {
 
     const url = new URL(window.location.href);
 
-  if (url.searchParams.has('auth')) {
-    Store.setStateValue('authorized', false);
-  } else {
-    const userId = await Storage.get('user_id');
-    if (!userId) {
+    if (url.searchParams.has('auth')) {
       Store.setStateValue('authorized', false);
     } else {
-      const userHash = await Storage.get('user_hash');
-      MTProtoClient('users.getFullUser', {
-        id: {
-          _: 'inputUser',
-          user_id: userId,
-          access_hash: userHash
-        }
-      }).then((data) => {
-        Store.setStateValue('user', data.user);
-        Store.setStateValue('authorized', true);
-      }, (err) => {
-        if (err.code === 401) {
-          url.searchParams.set('auth', '');
-          window.location.href = url.toString();
-        }
-      });
+      const userId = await Storage.get('user_id');
+      if (!userId) {
+        Store.setStateValue('authorized', false);
+      } else {
+        const userHash = await Storage.get('user_hash');
+        MTProtoClient('users.getFullUser', {
+          id: {
+            _: 'inputUser',
+            user_id: userId,
+            access_hash: userHash
+          }
+        }).then((data) => {
+          Store.setStateValue('user', data.user);
+          Store.setStateValue('authorized', true);
+        }, (err) => {
+          if (err.code === 401) {
+            url.searchParams.set('auth', '');
+            window.location.href = url.toString();
+          }
+        });
+      }
     }
-  }
- /*   MTProtoClient('help.getConfig', {})
-      .then((date) => {
-        debugger;
-        // Store.setStateValue('authorized', true);
-
-      }, err => {
-        debugger;
-        ErrorHandler(err)
-      });
-
- */   console.timeEnd('APP RENDER');
+    console.timeEnd('APP RENDER');
     return el;
   }
 

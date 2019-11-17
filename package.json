@@ -2,12 +2,15 @@
   "dependencies": {
     "@lottiefiles/lottie-player": "^0.3.0-rc2",
     "@lottiefiles/tgskit": "0.0.4",
+    "js-md5": "^0.7.3",
+    "leemon": "^6.2.0",
     "npm": "^6.13.0",
-    "@postaid/telegram-mtproto": "^2.2.2",
+    "pbkdf2": "^3.0.17",
+    "telegram-mtproto": "3.0.0-experimental",
     "worker-loader": "^2.0.0"
   },
   "scripts": {
-    "dev": "webpack-dev-server --open --info=false",
+    "dev": "webpack-dev-server --open --info=false --no-inline",
     "build": "webpack"
   },
   "devDependencies": {

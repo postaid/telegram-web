@@ -9,6 +9,7 @@ class ChatContentEmpty extends Component {
     super();
     this.chatItem = null;
     this.msgComponent = null;
+    this.mHandlerScroll = this.handlerScroll.bind(this);
     if (!abstract) {
       this.render();
     }
@@ -22,11 +23,6 @@ class ChatContentEmpty extends Component {
       ]),
       this.content = createEl('div', 'tg-chat-content-content')
     ]);
-    window.addEventListener('scroll', () => {
-      if ((document.documentElement.scrollTop || document.body.scrollTop) < 200) {
-        this.getMessages_();
-      }
-    });
    }
 
   updateAdditionalInfo (createEl) {
@@ -139,11 +135,22 @@ class ChatContentEmpty extends Component {
     return createEl('div', 'tg-chat-content-header-additional');
   }
 
+  handlerScroll () {
+    if ((document.documentElement.scrollTop || document.body.scrollTop) < 200) {
+      this.getMessages_();
+    }
+  }
+
   beforeShow () {
     this.chatItem = Store.getStateValue('activeChat');
     this.updatePhoto();
     this.updateAdditionalInfo(Component.createElement);
     this.updateMessages();
+    window.addEventListener('scroll', this.mHandlerScroll, {passive: true});
+  }
+
+  beforeHide () {
+    window.removeEventListener('scroll', this.mHandlerScroll);
   }
 }
 

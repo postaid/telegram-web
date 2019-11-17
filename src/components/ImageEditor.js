@@ -128,7 +128,9 @@ class ImageEditor extends Component {
     const ctx = canvas.getContext('2d');
     ctx.scale(this.coeff, this.coeff);
     ctx.drawImage(img, -position[0] / this.coeff, -position[1] / this.coeff, size, size, 0, 0, size, size);
-    this.emit('apply', canvas.toDataURL());
+    canvas.toBlob((blob) => {
+      this.emit('apply', blob);
+    }, 'image/png');
   }
 }
 
