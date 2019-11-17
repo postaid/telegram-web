@@ -1,5 +1,5 @@
 import ChatContentEmpty from 'ROOT/components/chatcontent/ChatContentEmpty';
-import ChatMessageUser from 'ROOT/components/ChatMessageUser'
+import ChatMessageUser from 'ROOT/components/chatmessage/ChatMessageUser'
 import Store from 'ROOT/store'
 
 class ChatContentUser extends ChatContentEmpty {
@@ -21,6 +21,14 @@ class ChatContentUser extends ChatContentEmpty {
         createEl('div', 'tg-chat-list-item-message' + (isOnline ? ' online' : ''), [this.i18n.t(isOnline ? 'status_online' : 'status_offline')]),
       ])
     ]);
+  }
+
+  getInputPeer () {
+    return {
+      _: 'inputPeerUser',
+      user_id: this.chatItem.peer_.id,
+      access_hash: this.chatItem.peer_.access_hash
+    }
   }
 
 }

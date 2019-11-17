@@ -22,6 +22,11 @@ class ChatContentEmpty extends Component {
       ]),
       this.content = createEl('div', 'tg-chat-content-content')
     ]);
+    window.addEventListener('scroll', () => {
+      if ((document.documentElement.scrollTop || document.body.scrollTop) < 200) {
+        this.getMessages_();
+      }
+    });
    }
 
   updateAdditionalInfo (createEl) {
@@ -56,32 +61,78 @@ class ChatContentEmpty extends Component {
   updateMessages () {
     if (this.chatItem) {
       this.content.innerHTML = '';
-      const messages = [];
-      for (let i = this.chatItem.lastMsg_.id - 10; i <= this.chatItem.lastMsg_.id; i++) {
-        const messageId = i;
-        messages.push({
-          _: 'inputMessageID',
-          id: messageId
-        });
-      }
-      this.getMessages_(messages, this.chatItem.peer_.id);
+      this.messagesOffset_ = 0;
+      this.getMessages_();
     }
   }
 
-  getMessages_ (messages, id) {
-    MTProtoClient('messages.getMessages', {
-      id: messages
+  getInputPeer () {
+    return {
+      _: 'PEERTYPE'
+    }
+  }
+
+  getMessages_ () {
+    if (this.gettingProgress_) {
+      return;
+    }
+    this.gettingProgress_ = true;
+    MTProtoClient('messages.getHistory', {
+      peer: this.getInputPeer(), // InputPeer  Target peer
+      offset_id: 0, // int  Only return messages starting from the specified message ID
+      offset_date: 0, // int  Only return messages sent after the specified date
+      add_offset: this.messagesOffset_, // int  Number of list elements to be skipped, negative values are also accepted.
+      limit: 10, // int  Number of results to return
+      max_id: 0, // int  If a positive value was transferred, the method will return only messages with IDs less than max_id
+      min_id: 0, // int  If a positive value was transferred, the method will return only messages with IDs more than min_id
+      hash: 0// int  Result hash
     })
-      .then((p) => {
-        if (this.chatItem && this.chatItem.peer_.id === id) {
-          p.messages.forEach((m) => {
-            if (m._ !== 'messageEmpty') {
-              this.content.appendChild((new this.msgComponent(m)).el);
-            }
-          });
+      .then(({messages, users, chats}) => {
+        const prevHeight = this.content.scrollHeight;
+        const prevScroll = this.getScroll();
+        const frag = document.createDocumentFragment();
+        let iUsers = {};
+        if (users) {
+          users.forEach(u => (iUsers[u.id] = u));
         }
+        let iChats = {};
+        if (chats) {
+          chats.forEach(c => (iChats[c.id] = c));
+        }
+        for (let i = messages.length - 1; i >= 0; i--) {
+          const m = messages[i];
+          if (m._ !== 'messageEmpty') {
+            const from = iUsers[m.from_id] || iChats[m.from_id];
+            frag.appendChild((new this.msgComponent(m, from)).el);
+          }
+        }
+        if (this.content.firstChild) {
+          this.content.insertBefore(frag, this.content.firstChild);
+        } else {
+          this.content.appendChild(frag);
+        }
+        const scrollHeight = this.content.scrollHeight;
+        if (!this.messagesOffset_) {
+          this.setScroll(scrollHeight);
+        } else {
+          this.setScroll(prevScroll + scrollHeight - prevHeight);
+        }
+        this.messagesOffset_ += messages.length;
+        this.gettingProgress_ = false;
       })
-      .catch(err => ErrorHandler(err))
+      .catch(err => {
+        this.gettingProgress_ = false;
+        return ErrorHandler(err);
+      });
+  }
+
+  getScroll () {
+    return document.body.scrollTop || document.documentElement.scrollTop;
+  }
+
+  setScroll (v) {
+    document.body.scrollTop = v;
+    document.documentElement.scrollTop = v;
   }
 
   getAdditionalInfo (createEl) {

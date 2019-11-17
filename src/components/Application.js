@@ -49,11 +49,9 @@ class Application extends Component {
           access_hash: userHash
         }
       }).then((data) => {
-        alert(1);
         Store.setStateValue('user', data.user);
         Store.setStateValue('authorized', true);
       }, (err) => {
-        alert(2);
         if (err.code === 401) {
           url.searchParams.set('auth', '');
           window.location.href = url.toString();

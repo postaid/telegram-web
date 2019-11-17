@@ -12,6 +12,10 @@
     background-color: white;
     display: flex;
     align-items: center;
+    position: fixed;
+    width: 840px;
+    margin: 0 auto;
+    z-index: 1;
 }
 
 .tg-chat-content-header > .tg-chat-list-item-photo {
@@ -33,7 +37,7 @@
 .tg-chat-content-content {
     max-width: 698px;
     margin: 0 auto;
-    padding-top: 10px;
+    padding-top: 71px;
 }
 
 .tg-chat-message {
@@ -52,6 +56,8 @@
 .tg-chat-message-content {
     position: relative;
     padding-right: 8px;
+    font-size: 16px;
+    line-height: normal;
 }
 
 .tg-chat-message-bubble {
@@ -96,14 +102,37 @@
     color: #4FAF4E;
 }
 
-.tg-chat-message.user.output {
+.tg-chat-message.user.output,
+.tg-chat-message.chat.output {
     margin-left: 96px;
     margin-right: 0;
     float: right;
 }
 
-.tg-chat-message.user {
+.tg-chat-message.user,
+.tg-chat-message.chat {
     margin-left: 0;
     margin-right: 96px;
     float: left;
+}
+
+.tg-chat-message.chat {
+    margin-left: 0;
+    margin-right: 96px;
+    float: left;
+}
+
+.tg-chat-list-item-subscribers {
+    font-size: 14px;
+}
+
+.tg-chat-message-sender {
+    position: relative;
+    color: #4EA4F6;
+    margin-bottom: 2px;
+}
+
+.tg-chat-message.chat .tg-chat-message-content {
+    font-size: 16px;
+    line-height: normal;
 }

@@ -7,26 +7,30 @@ function formatMessage (message, limit = -1) {
     text = text.slice(0, limit);
   }
 
-  const ents = [];
-  // todo: add other entities, check algo
-  for (let i = entities.length - 1; i >= 0; i--) {
-    const e = entities[i];
-    switch (e._) {
-      case 'messageEntityBold':
-        ents.push([e.offset, '<b>'], [e.offset + e.length, '</b>'])
-        break;
-    }
-  }
-  ents.sort((a, b) => a[0] - b[0]);
   let resText = ''
-  let index = 0;
-  for (let i = 0; i < ents.length; i++) {
-    const ent = ents[i];
-    resText += text.slice(index, ent[0]) + ent[1];
-    index = ent[0];
-  }
-  if (index < text.length) {
-    resText += text.slice(index);
+  if (entities.length) {
+    const ents = [];
+    // todo: add other entities, check algo
+    for (let i = entities.length - 1; i >= 0; i--) {
+      const e = entities[i];
+      switch (e._) {
+        case 'messageEntityBold':
+          ents.push([e.offset, '<b>'], [e.offset + e.length, '</b>'])
+          break;
+      }
+    }
+    ents.sort((a, b) => a[0] - b[0]);
+    let index = 0;
+    for (let i = 0; i < ents.length; i++) {
+      const ent = ents[i];
+      resText += text.slice(index, ent[0]) + ent[1];
+      index = ent[0];
+    }
+    if (index < text.length) {
+      resText += text.slice(index);
+    }
+  } else {
+    resText = text;
   }
   return resText;
 }
