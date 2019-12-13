@@ -4,7 +4,7 @@
     "@lottiefiles/tgskit": "0.0.4",
     "js-md5": "^0.7.3",
     "leemon": "^6.2.0",
-    "npm": "^6.13.0",
+    "npm": "^6.13.4",
     "pbkdf2": "^3.0.17",
     "telegram-mtproto": "3.0.0-experimental",
     "worker-loader": "^2.0.0"
